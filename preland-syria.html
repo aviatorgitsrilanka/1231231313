@@ -134,7 +134,7 @@ body{background:#0f0f19;color:#fff;font-family:'Segoe UI',Tahoma,Arial,sans-seri
 <body>
 
 <div class="topbar">
-  <div class="topbar-r"><div class="topbar-icon">▶</div><div class="topbar-name">Faris</div></div>
+  <div class="topbar-r"><div class="topbar-icon">▶</div><div class="topbar-name">Sidi</div></div>
   <div class="topbar-l"><div class="dot"></div><span id="oc">١٬٢٤٧ متصل</span></div>
 </div>
 
@@ -143,15 +143,15 @@ body{background:#0f0f19;color:#fff;font-family:'Segoe UI',Tahoma,Arial,sans-seri
 </div>
 
 <div class="signal-urgency" id="urgencyBlock">
-  <div class="urgency-timer">الإشارة متاحة هلق: <span id="urgTimer">23s</span></div>
+  <div class="urgency-timer">الإشارة متوفرة هسه: <span id="urgTimer">23s</span></div>
 </div>
 
 <div class="pred">
-  <h2>برنامج التوقعات — Faris</h2>
+  <h2>برنامج التوقعات — Sidi</h2>
   <div class="pred-val" id="pv"></div>
-  <div class="pred-hint" id="hint">اضغط الزر وشوف البرنامج كيف بيتوقع مباشرة</div>
+  <div class="pred-hint" id="hint">اضغط على الزر وشوف البرنامج شلون يتوقع مباشرة</div>
   <div class="arrow-wrap" id="arrowEl"><span class="arrow-bounce">👇</span></div>
-  <button class="btn-pred" id="bp" onclick="getSignal()">جيب الإشارة</button>
+  <button class="btn-pred" id="bp" onclick="getSignal()">احصل على الإشارة</button>
   <div class="pred-status" id="ps"></div>
 </div>
 
@@ -160,9 +160,9 @@ body{background:#0f0f19;color:#fff;font-family:'Segoe UI',Tahoma,Arial,sans-seri
   <canvas id="gc"></canvas>
   <div class="multi" id="md"></div>
   <div class="cpop" id="cpop"><div class="ca" id="cpA"></div><div class="cl">ربحت</div></div>
-  <div class="flew" id="flew"><div class="ft">طارت</div><div class="fv" id="fV"></div></div>
-  <div class="match-ov" id="mo"><div class="mt">الإشارة صح</div><div class="ms">البرنامج توقع بالظبط امتى الطيارة رح تطير</div><div class="mv" id="moV"></div></div>
-  <div class="wo" id="wo"><div class="wt">عم ننتظر الجولة الجديدة</div><div class="wn" id="wn">--</div><div class="ws">اضغط «جيب الإشارة»</div></div>
+  <div class="flew" id="flew"><div class="ft">طارت الطيارة</div><div class="fv" id="fV"></div></div>
+  <div class="match-ov" id="mo"><div class="mt">الإشارة صحيحة</div><div class="ms">البرنامج توقع بالضبط شوكت تطير الطيارة</div><div class="mv" id="moV"></div></div>
+  <div class="wo" id="wo"><div class="wt">جاري انتظار الجولة الجديدة</div><div class="wn" id="wn">--</div><div class="ws">اضغط «احصل على الإشارة»</div></div>
 </div>
 
 <div class="axis"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -170,15 +170,15 @@ body{background:#0f0f19;color:#fff;font-family:'Segoe UI',Tahoma,Arial,sans-seri
 <div class="bets">
   <div class="bp bpr">
     <div class="bt"><div class="btt on">رهان</div><div class="btt">أوتو</div></div>
-    <div class="br"><div class="bpm">−</div><div class="bv">60000</div><div class="bpm">+</div></div>
-    <div class="bq"><div class="bqi">60000</div><div class="bqi">100000</div><div class="bqi">200000</div><div class="bqi">500000</div></div>
-    <div class="bbtn bg-g" id="bb1" onclick="cashout()">رهان 60٬000 ل.س</div>
+    <div class="br"><div class="bpm">−</div><div class="bv">13000</div><div class="bpm">+</div></div>
+    <div class="bq"><div class="bqi">13000</div><div class="bqi">25000</div><div class="bqi">50000</div><div class="bqi">100000</div></div>
+    <div class="bbtn bg-g" id="bb1" onclick="cashout()">رهان 13,000 د.ع</div>
   </div>
   <div class="bp">
     <div class="bt"><div class="btt on">رهان</div><div class="btt">أوتو</div></div>
-    <div class="br"><div class="bpm">−</div><div class="bv">60000</div><div class="bpm">+</div></div>
-    <div class="bq"><div class="bqi">60000</div><div class="bqi">100000</div><div class="bqi">200000</div><div class="bqi">500000</div></div>
-    <div class="bbtn bg-g">رهان 60٬000 ل.س</div>
+    <div class="br"><div class="bpm">−</div><div class="bv">13000</div><div class="bpm">+</div></div>
+    <div class="bq"><div class="bqi">13000</div><div class="bqi">25000</div><div class="bqi">50000</div><div class="bqi">100000</div></div>
+    <div class="bbtn bg-g">رهان 13,000 د.ع</div>
   </div>
 </div>
 
@@ -186,7 +186,7 @@ body{background:#0f0f19;color:#fff;font-family:'Segoe UI',Tahoma,Arial,sans-seri
 <div class="cta-overlay" id="cta">
   <div class="cta-box">
     <div class="cta-result" id="ctaWin"></div>
-    <div class="cta-sub" id="ctaDesc">البرنامج شغال — دخّل هلق واحصل على إشارات مجانية</div>
+    <div class="cta-sub" id="ctaDesc">البرنامج يشتغل — ادخل هسه واحصل على إشارات مجانية</div>
     <a tracker class="btn-tg">
       <svg class="tg-logo" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-2.018 9.51c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.881.71z"/></svg>
       START
@@ -203,7 +203,7 @@ body{background:#0f0f19;color:#fff;font-family:'Segoe UI',Tahoma,Arial,sans-seri
 </div>
 
 <script>
-const BET=60000; // SYP
+const BET=13000; // IQD (~$10)
 
 let pred=0,phase='idle',t0=0,cur=1,cashedAt=0,cashedOut=false;
 const cvs=document.getElementById('gc'),c=cvs.getContext('2d');
@@ -224,7 +224,6 @@ function drawGrid(){
 
 function getSignal(){
   if(phase!=='idle')return;
-  // hide urgency elements
   const ub=document.getElementById('urgencyBlock');
   const ab=document.getElementById('arrowEl');
   if(ub)ub.style.display='none';
@@ -232,7 +231,7 @@ function getSignal(){
   const btn=document.getElementById('bp'),st=document.getElementById('ps'),pv=document.getElementById('pv');
   btn.disabled=true;
   document.getElementById('hint').style.display='none';
-  st.className='pred-status an';st.textContent='⏳ عم نحلل البيانات...';
+  st.className='pred-status an';st.textContent='⏳ جاري تحليل البيانات...';
   pv.classList.remove('show');
   if(typeof fbq!=='undefined')fbq('track','ViewContent');
   pred=Math.round((Math.random()*3+2)*100)/100;
@@ -247,10 +246,10 @@ function getSignal(){
 function countdown(){
   phase='cd';
   const wo=document.getElementById('wo');wo.classList.remove('hide');
-  wo.querySelector('.wt').textContent='الجولة بتبلش بـ';
+  wo.querySelector('.wt').textContent='تبدأ الجولة خلال';
   wo.querySelector('.ws').textContent='';
   const bb=document.getElementById('bb1');
-  bb.textContent='...عم ننتظر';bb.className='bbtn bg-o';
+  bb.textContent='انتظر...';bb.className='bbtn bg-o';
   let n=2;document.getElementById('wn').textContent=n;
   const iv=setInterval(()=>{
     n--;if(n<=0){clearInterval(iv);wo.classList.add('hide');fly()}
@@ -263,7 +262,7 @@ function fly(){
   document.getElementById('md').className='multi show';
   document.getElementById('md').style.color='#fff';
   const bb=document.getElementById('bb1');
-  bb.className='bbtn bg-o';bb.textContent=BET+' ل.س سحب';
+  bb.className='bbtn bg-o';bb.textContent=BET+' د.ع سحب';
   requestAnimationFrame(tick);
 }
 
@@ -277,17 +276,13 @@ function tick(ts){
   if(!cashedOut){
     md.style.color='#fff';md.textContent=cur.toFixed(2)+'x';
     const bb=document.getElementById('bb1');
-    bb.textContent=Math.floor(BET*cur)+' ل.س اسحب';
-    // intensify cashout button as plane approaches target
-    // progress: 0 = just started, 1 = at target
+    bb.textContent=Math.floor(BET*cur)+' د.ع اسحب';
     if(p>0.4){
-      const intensity=Math.min((p-0.4)/0.6,1); // 0→1 from 40% to 100%
-      const r=Math.floor(76+intensity*(229-76));   // green→red
+      const intensity=Math.min((p-0.4)/0.6,1);
+      const r=Math.floor(76+intensity*(229-76));
       const g=Math.floor(175+intensity*(56-175));
       const b2=Math.floor(80+intensity*(45-80));
       bb.style.background=`linear-gradient(135deg,rgb(${r},${g},${b2}),rgb(${Math.floor(r*.7)},${Math.floor(g*.7)},${Math.floor(b2*.7)}))`;
-      // pulsing speed increases
-      const speed=Math.max(0.3,1-intensity*0.7);
       bb.style.animation=`none`;
       if(intensity>0.7){
         bb.classList.add('urgent');
@@ -308,9 +303,9 @@ function cashout(){
   cashedOut=true;cashedAt=cur;
   const bb=document.getElementById('bb1');
   bb.style.background='';bb.style.boxShadow='';bb.classList.remove('urgent');
-  document.getElementById('cpA').textContent='+'+Math.floor(BET*cashedAt)+' ل.س';
+  document.getElementById('cpA').textContent='+'+Math.floor(BET*cashedAt)+' د.ع';
   document.getElementById('cpop').classList.add('show');
-  bb.className='bbtn bg-w';bb.textContent='ربحت +'+Math.floor(BET*cashedAt)+' ل.س';
+  bb.className='bbtn bg-w';bb.textContent='ربحت +'+Math.floor(BET*cashedAt)+' د.ع';
   if(navigator.vibrate)navigator.vibrate(50);
 }
 
@@ -335,15 +330,15 @@ function crashed(){
   setTimeout(()=>{
     const cta=document.getElementById('cta');
     if(cashedOut){
-      document.getElementById('ctaWin').textContent='+'+Math.floor(BET*cashedAt)+' ل.س';
-      document.getElementById('ctaDesc').textContent='ربحت — دخّل هلق واحصل على إشارات أكتر';
+      document.getElementById('ctaWin').textContent='+'+Math.floor(BET*cashedAt)+' د.ع';
+      document.getElementById('ctaDesc').textContent='لقد ربحت! اشترك الآن للحصول على المزيد من الإشارات';
     }else{
       document.getElementById('ctaWin').textContent=pred.toFixed(2)+'x';
-      document.getElementById('ctaDesc').textContent='الإشارة كانت صح — دخّل هلق واحصل على البرنامج الكامل';
+      document.getElementById('ctaDesc').textContent='الإشارة كانت صحيحة تماماً! اشترك الآن لتحميل البرنامج الكامل';
     }
     cta.classList.add('show');
     document.getElementById('ps').className='pred-status ok';
-    document.getElementById('ps').textContent='الإشارة طابقت';
+    document.getElementById('ps').textContent='تطابقت الإشارة';
   },2800);
 
   const sp=document.createElement('span');
@@ -395,7 +390,7 @@ function drawPlane(x,y,p){
 }
 
 setInterval(()=>{
-  document.getElementById('oc').textContent=(1100+Math.floor(Math.random()*400)).toLocaleString('ar-SY')+' متصل';
+  document.getElementById('oc').textContent=(1100+Math.floor(Math.random()*400)).toLocaleString('ar-IQ')+' متصل';
 },8000);
 
 // ===== URGENCY TIMER =====
@@ -405,8 +400,6 @@ setInterval(()=>{
   const el=document.getElementById('urgTimer');
   if(el)el.textContent=urgSec+'s';
 },1000);
-
-// ===== URGENCY COUNTER REMOVED =====
 
 // ===== SOUND BEEP =====
 setTimeout(()=>{
