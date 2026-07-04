@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0f0f19">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Faris</title>
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1843687466418384');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1843687466418384&ev=PageView&noscript=1"/></noscript>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{background:#0f0f19}
+body{background:#0f0f19;color:#fff;font-family:'Segoe UI',Tahoma,Arial,sans-serif;overflow-x:hidden;-webkit-tap-highlight-color:transparent;direction:rtl;padding-bottom:70px}
+
+/* === TOPBAR === */
+.topbar{background:#17172a;padding:8px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #252540}
+.topbar-r{display:flex;align-items:center;gap:6px}
+.topbar-icon{width:26px;height:26px;background:#e5382d;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;color:#fff}
+.topbar-name{font-weight:700;font-size:13px}
+.topbar-l{display:flex;align-items:center;gap:5px;font-size:11px;color:#7a7a95}
+.dot{width:5px;height:5px;background:#4caf50;border-radius:50%;animation:bl 2s infinite}
+@keyframes bl{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* === HISTORY === */
+.history{display:flex;gap:4px;padding:6px 10px;overflow-x:auto;background:#0f0f19;scrollbar-width:none;direction:ltr}
+.history::-webkit-scrollbar{display:none}
+.history span{flex-shrink:0;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700}
+.hi-b{background:#1565c0;color:#fff}.hi-p{background:#7b1fa2;color:#fff}.hi-g{background:rgba(76,175,80,.15);color:#4caf50}
+
+/* === PREDICTION PANEL === */
+.pred{margin:8px 8px 4px;background:linear-gradient(135deg,#1b1b30,#222240);border:1px solid #2e2e50;border-radius:10px;padding:12px 10px;text-align:center}
+.pred h2{font-size:12px;color:#7a7a95;font-weight:600;margin-bottom:4px}
+.pred-val{font-size:44px;font-weight:900;color:#4caf50;display:none;margin:4px 0;text-shadow:0 0 20px rgba(76,175,80,.3);direction:ltr}
+.pred-val.show{display:block;animation:pop .3s cubic-bezier(.17,.89,.32,1.28)}
+@keyframes pop{0%{transform:scale(.4);opacity:0}100%{transform:scale(1);opacity:1}}
+/* === PROVOCATION ELEMENTS === */
+.signal-urgency{background:#17172a;border-radius:8px;padding:6px 12px;margin:0 8px 4px;text-align:center}
+.urgency-timer{font-size:12px;color:#7a7a95;font-weight:500;direction:ltr}
+.urgency-timer span{font-size:14px;font-weight:700;color:#aaa}
+.arrow-wrap{text-align:center;margin-bottom:4px}
+.arrow-bounce{font-size:22px;display:inline-block;animation:arrBounce 1s ease-in-out infinite}
+@keyframes arrBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+.btn-pred{background:linear-gradient(135deg,#2AABEE,#1a8fc7);color:#fff;border:none;padding:14px 20px;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;width:100%;max-width:300px;animation:btnBounce 1.2s ease-in-out infinite}
+@keyframes btnBounce{0%,100%{transform:translateY(0);box-shadow:0 0 8px rgba(42,171,238,.3)}50%{transform:translateY(-5px);box-shadow:0 6px 20px rgba(42,171,238,.5)}}
+.btn-pred:active{transform:scale(.96)}
+.btn-pred:disabled{background:#2a2a40;color:#555;cursor:default;animation:none}
+.pred-hint{font-size:12px;color:#7a7a95;margin-bottom:8px;line-height:1.5}
+.pred-status{font-size:11px;color:#7a7a95;margin-top:6px;min-height:14px}
+.pred-status.an{color:#ffc107}.pred-status.ok{color:#4caf50}
+
+/* === GAME AREA === */
+.game-wrap{position:relative;width:100%;height:42vw;max-height:260px;background:#0f0f19;overflow:hidden}
+.game-wrap canvas{position:relative;z-index:2;width:100%;height:100%;display:block}
+.rays{position:absolute;inset:0;z-index:1;background:repeating-conic-gradient(from 0deg at 50% 100%,rgba(255,255,255,.015) 0deg 3.5deg,transparent 3.5deg 7deg);pointer-events:none}
+.multi{position:absolute;top:40%;left:50%;transform:translate(-50%,-50%);font-size:46px;font-weight:900;z-index:5;pointer-events:none;display:none;letter-spacing:-1px;text-shadow:0 2px 16px rgba(0,0,0,.6);color:#fff;direction:ltr}
+.multi.show{display:block}
+
+.cpop{position:absolute;top:22%;left:50%;transform:translate(-50%,-50%);z-index:8;pointer-events:none;display:none;text-align:center}
+.cpop.show{display:block;animation:cpA .5s cubic-bezier(.17,.89,.32,1.28)}
+@keyframes cpA{0%{transform:translate(-50%,-50%) scale(.3);opacity:0}100%{transform:translate(-50%,-50%) scale(1);opacity:1}}
+.cpop .ca{font-size:30px;font-weight:900;color:#4caf50;text-shadow:0 0 18px rgba(76,175,80,.4);direction:ltr}
+.cpop .cl{font-size:12px;color:#4caf50;margin-top:2px;font-weight:600}
+
+.flew{position:absolute;top:40%;left:50%;transform:translate(-50%,-50%);z-index:9;pointer-events:none;display:none;text-align:center}
+.flew.show{display:block;animation:flIn .4s ease}
+@keyframes flIn{0%{transform:translate(-50%,-50%) scale(.5);opacity:0}100%{transform:translate(-50%,-50%) scale(1);opacity:1}}
+.flew .ft{font-size:18px;font-weight:900;color:#e5382d}
+.flew .fv{font-size:38px;font-weight:900;color:#e5382d;text-shadow:0 0 14px rgba(229,56,45,.3);direction:ltr}
+
+.match-ov{position:absolute;inset:0;background:rgba(10,10,22,.85);display:none;align-items:center;justify-content:center;flex-direction:column;z-index:12}
+.match-ov.show{display:flex;animation:fi .3s}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+.match-ov .mt{font-size:18px;font-weight:900;color:#4caf50}
+.match-ov .ms{font-size:12px;color:#7a7a95;margin-top:3px}
+.match-ov .mv{font-size:28px;font-weight:900;color:#fff;margin-top:6px;direction:ltr}
+
+.wo{position:absolute;inset:0;background:rgba(15,15,25,.92);z-index:20;display:flex;align-items:center;justify-content:center;flex-direction:column}
+.wo.hide{display:none}
+.wo .wt{font-size:13px;color:#7a7a95;margin-bottom:6px}
+.wo .wn{font-size:26px;font-weight:900;color:#fff}
+.wo .ws{font-size:10px;color:#555;margin-top:4px}
+
+/* === AXIS === */
+.axis{height:16px;background:#111120;display:flex;align-items:center;justify-content:space-evenly;padding:0 12px;border-top:1px solid #1a1a30;border-bottom:1px solid #1a1a30}
+.axis i{width:3px;height:3px;background:#2e2e48;border-radius:50%;display:block}
+
+/* === BET PANELS === */
+.bets{display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:5px 6px;background:#111120}
+.bp{background:#17172a;border-radius:8px;padding:6px;border:1px solid #252540}
+.bt{display:flex;margin-bottom:4px}
+.btt{flex:1;padding:4px 0;text-align:center;font-size:10px;font-weight:600;color:#7a7a95;background:transparent;border:none;border-radius:4px}
+.btt.on{background:#252540;color:#fff}
+.br{display:flex;align-items:center;gap:3px;margin-bottom:4px;direction:ltr}
+.bpm{width:24px;height:24px;border-radius:50%;border:1px solid #3a3a55;background:transparent;color:#fff;font-size:14px;display:flex;align-items:center;justify-content:center}
+.bv{flex:1;text-align:center;font-size:14px;font-weight:700}
+.bq{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:4px}
+.bqi{padding:3px;text-align:center;font-size:10px;font-weight:600;color:#7a7a95;background:#0f0f19;border:none;border-radius:4px}
+.bbtn{width:100%;padding:9px;border:none;border-radius:7px;font-size:12px;font-weight:700;text-transform:uppercase;text-align:center;cursor:pointer;transition:transform .1s;direction:ltr}
+.bbtn:active{transform:scale(.96)}
+.bg-g{background:linear-gradient(135deg,#4caf50,#2e7d32);color:#fff}
+.bg-o{background:linear-gradient(135deg,#ff9800,#e65100);color:#fff}
+.bg-w{background:linear-gradient(135deg,#4caf50,#1b5e20);color:#fff}
+.bpr{border-color:rgba(229,56,45,.35)}
+
+/* === CTA POPUP OVERLAY === */
+.cta-overlay{position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:90;display:none;align-items:center;justify-content:center;padding:20px}
+.cta-overlay.show{display:flex;animation:ctaIn .5s cubic-bezier(.17,.89,.32,1.28)}
+@keyframes ctaIn{from{opacity:0;transform:scale(.75)}to{opacity:1;transform:scale(1)}}
+.cta-box{background:#17172a;border:1px solid #252540;border-radius:16px;padding:22px 16px;width:100%;max-width:320px;text-align:center}
+.cta-result{font-size:28px;font-weight:900;color:#4caf50;margin-bottom:6px;direction:ltr}
+.cta-sub{font-size:13px;color:#aaa;margin-bottom:18px;line-height:1.5}
+.btn-tg{display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;background:#2AABEE;color:#fff;border:none;padding:14px 20px;border-radius:10px;font-size:17px;font-weight:700;cursor:pointer;width:100%;text-align:center;letter-spacing:1px}
+.btn-tg:active{opacity:.9}
+.tg-logo{width:22px;height:22px;flex-shrink:0}
+.bbtn.urgent{animation:urgentPulse .3s ease-in-out infinite!important}
+@keyframes urgentPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+/* BOTTOM CTA - always visible */
+.bottom-cta{position:fixed;bottom:0;left:0;right:0;background:linear-gradient(180deg,transparent,#0f0f19 15%,#0f0f19);padding:8px 12px 14px;text-align:center;z-index:50;direction:rtl}
+.bottom-cta .bc-btn{display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;background:#2AABEE;color:#fff;border:none;padding:13px 20px;border-radius:10px;font-size:17px;font-weight:700;cursor:pointer;width:100%;max-width:340px;margin:0 auto}
+.bottom-cta .bc-btn:active{opacity:.9}
+
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-r"><div class="topbar-icon">▶</div><div class="topbar-name">Faris</div></div>
+  <div class="topbar-l"><div class="dot"></div><span id="oc">١٬٢٤٧ متصل</span></div>
+</div>
+
+<div class="history" id="hB">
+  <span class="hi-b">12.43x</span><span class="hi-g">1.21x</span><span class="hi-p">48.70x</span><span class="hi-g">2.05x</span><span class="hi-b">7.83x</span><span class="hi-g">1.54x</span><span class="hi-g">3.12x</span><span class="hi-b">15.60x</span><span class="hi-g">1.87x</span><span class="hi-p">92.10x</span>
+</div>
+
+<div class="signal-urgency" id="urgencyBlock">
+  <div class="urgency-timer">الإشارة متاحة هلق: <span id="urgTimer">23s</span></div>
+</div>
+
+<div class="pred">
+  <h2>برنامج التوقعات — Faris</h2>
+  <div class="pred-val" id="pv"></div>
+  <div class="pred-hint" id="hint">اضغط الزر وشوف البرنامج كيف بيتوقع مباشرة</div>
+  <div class="arrow-wrap" id="arrowEl"><span class="arrow-bounce">👇</span></div>
+  <button class="btn-pred" id="bp" onclick="getSignal()">جيب الإشارة</button>
+  <div class="pred-status" id="ps"></div>
+</div>
+
+<div class="game-wrap" id="gw">
+  <div class="rays"></div>
+  <canvas id="gc"></canvas>
+  <div class="multi" id="md"></div>
+  <div class="cpop" id="cpop"><div class="ca" id="cpA"></div><div class="cl">ربحت</div></div>
+  <div class="flew" id="flew"><div class="ft">طارت</div><div class="fv" id="fV"></div></div>
+  <div class="match-ov" id="mo"><div class="mt">الإشارة صح</div><div class="ms">البرنامج توقع بالظبط امتى الطيارة رح تطير</div><div class="mv" id="moV"></div></div>
+  <div class="wo" id="wo"><div class="wt">عم ننتظر الجولة الجديدة</div><div class="wn" id="wn">--</div><div class="ws">اضغط «جيب الإشارة»</div></div>
+</div>
+
+<div class="axis"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+<div class="bets">
+  <div class="bp bpr">
+    <div class="bt"><div class="btt on">رهان</div><div class="btt">أوتو</div></div>
+    <div class="br"><div class="bpm">−</div><div class="bv">60000</div><div class="bpm">+</div></div>
+    <div class="bq"><div class="bqi">60000</div><div class="bqi">100000</div><div class="bqi">200000</div><div class="bqi">500000</div></div>
+    <div class="bbtn bg-g" id="bb1" onclick="cashout()">رهان 60٬000 ل.س</div>
+  </div>
+  <div class="bp">
+    <div class="bt"><div class="btt on">رهان</div><div class="btt">أوتو</div></div>
+    <div class="br"><div class="bpm">−</div><div class="bv">60000</div><div class="bpm">+</div></div>
+    <div class="bq"><div class="bqi">60000</div><div class="bqi">100000</div><div class="bqi">200000</div><div class="bqi">500000</div></div>
+    <div class="bbtn bg-g">رهان 60٬000 ل.س</div>
+  </div>
+</div>
+
+<!-- CTA POPUP OVERLAY (appears after signal) -->
+<div class="cta-overlay" id="cta">
+  <div class="cta-box">
+    <div class="cta-result" id="ctaWin"></div>
+    <div class="cta-sub" id="ctaDesc">البرنامج شغال — دخّل هلق واحصل على إشارات مجانية</div>
+    <a tracker class="btn-tg">
+      <svg class="tg-logo" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-2.018 9.51c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.881.71z"/></svg>
+      START
+    </a>
+  </div>
+</div>
+
+<!-- BOTTOM CTA - always visible -->
+<div class="bottom-cta">
+  <a tracker class="bc-btn">
+    <svg class="tg-logo" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-2.018 9.51c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.881.71z"/></svg>
+    START
+  </a>
+</div>
+
+<script>
+const BET=60000; // SYP
+
+let pred=0,phase='idle',t0=0,cur=1,cashedAt=0,cashedOut=false;
+const cvs=document.getElementById('gc'),c=cvs.getContext('2d');
+
+function rsz(){
+  const w=document.getElementById('gw');
+  cvs.width=w.clientWidth*2;cvs.height=w.clientHeight*2;
+  if(phase==='idle')drawGrid();
+}
+window.addEventListener('resize',rsz);rsz();
+
+function drawGrid(){
+  c.clearRect(0,0,cvs.width,cvs.height);
+  c.strokeStyle='rgba(255,255,255,0.04)';c.lineWidth=1;
+  for(let i=0;i<6;i++){let y=cvs.height*(i/6);c.beginPath();c.moveTo(0,y);c.lineTo(cvs.width,y);c.stroke()}
+  for(let i=0;i<10;i++){let x=cvs.width*(i/10);c.beginPath();c.moveTo(x,0);c.lineTo(x,cvs.height);c.stroke()}
+}
+
+function getSignal(){
+  if(phase!=='idle')return;
+  // hide urgency elements
+  const ub=document.getElementById('urgencyBlock');
+  const ab=document.getElementById('arrowEl');
+  if(ub)ub.style.display='none';
+  if(ab)ab.style.display='none';
+  const btn=document.getElementById('bp'),st=document.getElementById('ps'),pv=document.getElementById('pv');
+  btn.disabled=true;
+  document.getElementById('hint').style.display='none';
+  st.className='pred-status an';st.textContent='⏳ عم نحلل البيانات...';
+  pv.classList.remove('show');
+  if(typeof fbq!=='undefined')fbq('track','ViewContent');
+  pred=Math.round((Math.random()*3+2)*100)/100;
+  setTimeout(()=>{
+    pv.textContent=pred.toFixed(2)+'x';pv.classList.add('show');
+    st.className='pred-status ok';st.textContent='✅ الإشارة جاهزة!';
+    document.getElementById('wo').classList.add('hide');
+    setTimeout(()=>countdown(),600);
+  },1200);
+}
+
+function countdown(){
+  phase='cd';
+  const wo=document.getElementById('wo');wo.classList.remove('hide');
+  wo.querySelector('.wt').textContent='الجولة بتبلش بـ';
+  wo.querySelector('.ws').textContent='';
+  const bb=document.getElementById('bb1');
+  bb.textContent='...عم ننتظر';bb.className='bbtn bg-o';
+  let n=2;document.getElementById('wn').textContent=n;
+  const iv=setInterval(()=>{
+    n--;if(n<=0){clearInterval(iv);wo.classList.add('hide');fly()}
+    else document.getElementById('wn').textContent=n;
+  },1000);
+}
+
+function fly(){
+  phase='fly';t0=performance.now();cur=1;cashedOut=false;cashedAt=0;
+  document.getElementById('md').className='multi show';
+  document.getElementById('md').style.color='#fff';
+  const bb=document.getElementById('bb1');
+  bb.className='bbtn bg-o';bb.textContent=BET+' ل.س سحب';
+  requestAnimationFrame(tick);
+}
+
+function tick(ts){
+  const el=(ts-t0)/1000;
+  const tt=2+pred*0.5;
+  const p=Math.min(el/tt,1);
+  cur=1+(pred-1)*Math.pow(p,1.5);
+  if(p>=1)cur=pred;
+  const md=document.getElementById('md');
+  if(!cashedOut){
+    md.style.color='#fff';md.textContent=cur.toFixed(2)+'x';
+    const bb=document.getElementById('bb1');
+    bb.textContent=Math.floor(BET*cur)+' ل.س اسحب';
+    // intensify cashout button as plane approaches target
+    // progress: 0 = just started, 1 = at target
+    if(p>0.4){
+      const intensity=Math.min((p-0.4)/0.6,1); // 0→1 from 40% to 100%
+      const r=Math.floor(76+intensity*(229-76));   // green→red
+      const g=Math.floor(175+intensity*(56-175));
+      const b2=Math.floor(80+intensity*(45-80));
+      bb.style.background=`linear-gradient(135deg,rgb(${r},${g},${b2}),rgb(${Math.floor(r*.7)},${Math.floor(g*.7)},${Math.floor(b2*.7)}))`;
+      // pulsing speed increases
+      const speed=Math.max(0.3,1-intensity*0.7);
+      bb.style.animation=`none`;
+      if(intensity>0.7){
+        bb.classList.add('urgent');
+      }
+      if(intensity>0.5){
+        bb.style.boxShadow=`0 0 ${Math.floor(intensity*25)}px rgba(229,56,45,${intensity.toFixed(2)})`;
+      }
+    }
+  }else{
+    md.style.color='rgba(255,255,255,0.35)';md.textContent=cur.toFixed(2)+'x';
+  }
+  draw(p);
+  if(p<1)requestAnimationFrame(tick);else crashed();
+}
+
+function cashout(){
+  if(phase!=='fly'||cashedOut)return;
+  cashedOut=true;cashedAt=cur;
+  const bb=document.getElementById('bb1');
+  bb.style.background='';bb.style.boxShadow='';bb.classList.remove('urgent');
+  document.getElementById('cpA').textContent='+'+Math.floor(BET*cashedAt)+' ل.س';
+  document.getElementById('cpop').classList.add('show');
+  bb.className='bbtn bg-w';bb.textContent='ربحت +'+Math.floor(BET*cashedAt)+' ل.س';
+  if(navigator.vibrate)navigator.vibrate(50);
+}
+
+function crashed(){
+  phase='crashed';
+  const md=document.getElementById('md');
+  md.style.color='#e5382d';md.textContent=pred.toFixed(2)+'x';
+
+  setTimeout(()=>{
+    document.getElementById('cpop').classList.remove('show');
+    document.getElementById('fV').textContent=pred.toFixed(2)+'x';
+    document.getElementById('flew').classList.add('show');
+    md.className='multi';
+  },400);
+
+  setTimeout(()=>{
+    document.getElementById('flew').classList.remove('show');
+    document.getElementById('moV').textContent=pred.toFixed(2)+'x ✅';
+    document.getElementById('mo').classList.add('show');
+  },1800);
+
+  setTimeout(()=>{
+    const cta=document.getElementById('cta');
+    if(cashedOut){
+      document.getElementById('ctaWin').textContent='+'+Math.floor(BET*cashedAt)+' ل.س';
+      document.getElementById('ctaDesc').textContent='ربحت — دخّل هلق واحصل على إشارات أكتر';
+    }else{
+      document.getElementById('ctaWin').textContent=pred.toFixed(2)+'x';
+      document.getElementById('ctaDesc').textContent='الإشارة كانت صح — دخّل هلق واحصل على البرنامج الكامل';
+    }
+    cta.classList.add('show');
+    document.getElementById('ps').className='pred-status ok';
+    document.getElementById('ps').textContent='الإشارة طابقت';
+  },2800);
+
+  const sp=document.createElement('span');
+  sp.textContent=pred.toFixed(2)+'x';
+  sp.className=pred>=10?'hi-p':pred>=5?'hi-b':'hi-g';
+  document.getElementById('hB').prepend(sp);
+}
+
+function draw(p){
+  const W=cvs.width,H=cvs.height;
+  c.clearRect(0,0,W,H);
+  c.strokeStyle='rgba(255,255,255,0.035)';c.lineWidth=1;
+  for(let i=0;i<6;i++){let y=H*(i/6);c.beginPath();c.moveTo(0,y);c.lineTo(W,y);c.stroke()}
+  for(let i=0;i<10;i++){let x=W*(i/10);c.beginPath();c.moveTo(x,0);c.lineTo(x,H);c.stroke()}
+  const pad=40,steps=Math.floor(p*150);
+  c.beginPath();c.moveTo(pad,H-pad);
+  for(let i=0;i<=steps;i++){const q=i/150;c.lineTo(pad+(W-pad*2)*q,H-pad-(H-pad*2)*Math.pow(q,1.5)*.85)}
+  const eX=pad+(W-pad*2)*p,eY=H-pad-(H-pad*2)*Math.pow(p,1.5)*.85;
+  c.lineTo(eX,H-pad);c.closePath();
+  const g=c.createLinearGradient(0,H,0,0);
+  g.addColorStop(0,'rgba(229,56,45,0.1)');g.addColorStop(1,'rgba(229,56,45,0.01)');
+  c.fillStyle=g;c.fill();
+  c.beginPath();c.moveTo(pad,H-pad);
+  for(let i=0;i<=steps;i++){const q=i/150;c.lineTo(pad+(W-pad*2)*q,H-pad-(H-pad*2)*Math.pow(q,1.5)*.85)}
+  c.strokeStyle='#e5382d';c.lineWidth=3;c.lineCap='round';c.stroke();
+  if(cashedOut&&cashedAt>1){
+    const cp2=(cashedAt-1)/(pred-1),cy=H-pad-(H-pad*2)*Math.pow(cp2,1.5)*.85;
+    c.setLineDash([6,5]);c.strokeStyle='rgba(76,175,80,0.35)';c.lineWidth=1.5;
+    c.beginPath();c.moveTo(pad,cy);c.lineTo(W-pad,cy);c.stroke();c.setLineDash([]);
+    c.fillStyle='#4caf50';c.font='bold 18px sans-serif';c.textAlign='left';
+    c.fillText(cashedAt.toFixed(2)+'x',pad+8,cy-8);
+  }
+  drawPlane(eX,eY,p);
+}
+
+function drawPlane(x,y,p){
+  c.save();
+  const a=-Math.atan(1.5*Math.pow(Math.max(p,0.01),0.5)*0.85*((cvs.height-80)/(cvs.width-80)));
+  c.translate(x,y);c.rotate(a);
+  const s=2;
+  c.fillStyle='#e5382d';
+  c.beginPath();c.ellipse(0,0,22*s,6*s,0,0,Math.PI*2);c.fill();
+  c.beginPath();c.moveTo(-4*s,0);c.lineTo(-10*s,-14*s);c.lineTo(6*s,-3*s);c.closePath();c.fill();
+  c.beginPath();c.moveTo(-18*s,0);c.lineTo(-24*s,-10*s);c.lineTo(-14*s,-2*s);c.closePath();c.fill();
+  c.beginPath();c.moveTo(-4*s,0);c.lineTo(-8*s,7*s);c.lineTo(2*s,2*s);c.closePath();c.fill();
+  c.fillStyle='rgba(255,255,255,0.25)';c.beginPath();c.ellipse(12*s,-1*s,5*s,3*s,0,0,Math.PI*2);c.fill();
+  c.fillStyle='rgba(255,180,50,0.35)';c.beginPath();c.ellipse(-24*s,0,5*s,3*s,0,0,Math.PI*2);c.fill();
+  c.restore();
+}
+
+setInterval(()=>{
+  document.getElementById('oc').textContent=(1100+Math.floor(Math.random()*400)).toLocaleString('ar-SY')+' متصل';
+},8000);
+
+// ===== URGENCY TIMER =====
+let urgSec=23;
+setInterval(()=>{
+  urgSec--;if(urgSec<=0)urgSec=23;
+  const el=document.getElementById('urgTimer');
+  if(el)el.textContent=urgSec+'s';
+},1000);
+
+// ===== URGENCY COUNTER REMOVED =====
+
+// ===== SOUND BEEP =====
+setTimeout(()=>{
+  try{
+    const ctx=new(window.AudioContext||window.webkitAudioContext)();
+    const play=(freq,start,dur)=>{
+      const o=ctx.createOscillator(),g=ctx.createGain();
+      o.connect(g);g.connect(ctx.destination);
+      o.frequency.value=freq;o.type='sine';
+      g.gain.setValueAtTime(0,ctx.currentTime+start);
+      g.gain.linearRampToValueAtTime(.12,ctx.currentTime+start+.01);
+      g.gain.linearRampToValueAtTime(0,ctx.currentTime+start+dur);
+      o.start(ctx.currentTime+start);o.stop(ctx.currentTime+start+dur+.05);
+    };
+    play(880,0,.08);play(1100,.2,.08);
+  }catch(e){}
+},800);
+
+drawGrid();
+</script>
+</body>
+</html>
